@@ -4,7 +4,7 @@ var webpackConfig = require('./webpack.config.dev');
 module.exports = function (config) {
   config.set({
     browsers: ['Chrome'],
-    singleRun: true,
+    singleRun: false,
     frameworks: ['mocha', 'chai'],
     files: [
       { pattern: 'specs/**/*_spec.js', watched: false },
