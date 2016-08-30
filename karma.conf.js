@@ -20,6 +20,6 @@ module.exports = function (config) {
       'specs/helpers/*.js': ['webpack'],
     },
     webpack: webpackConfig,
-    webpackMiddleware: { stats: 'none' },
+    webpackMiddleware: { stats: 'errors-only' },
   });
 };
