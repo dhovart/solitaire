@@ -68,19 +68,24 @@ describe('main reducer', () => {
     let state;
     beforeEach(() => {
       state = deepFreeze({
-        stock: [{ suit: '♣', value: 13 }, { suit: '♥', value: 4 }],
-        waste: [{ suit: '♠', value: 5 }],
+        stock: [
+          { suit: '♣', value: 13, hidden: true },
+          { suit: '♥', value: 4, hidden: true },
+        ],
+        waste: [
+          { suit: '♠', value: 5, hidden: false },
+        ],
       });
     });
-    it('moves the top card of the stock pile to the waste', () => {
+    it('moves the top card of the stock pile to the waste and reveal it', () => {
       const nextState = reducer(state, { type: 'NEW_WASTE_CARD' });
-      expect(nextState.waste).to.eql([{ suit: '♣', value: 13 }]);
+      expect(nextState.waste).to.eql([{ suit: '♣', value: 13, hidden: false }]);
     });
-    it('moves the current waste card to the end of the stock pile', () => {
+    it('moves the current waste card to the end of the stock pile and hide it', () => {
       const nextState = reducer(state, { type: 'NEW_WASTE_CARD' });
       expect(nextState.stock).to.eql([
-        { suit: '♥', value: 4 },
-        { suit: '♠', value: 5 },
+        { suit: '♥', value: 4, hidden: true },
+        { suit: '♠', value: 5, hidden: true },
       ]);
     });
   });

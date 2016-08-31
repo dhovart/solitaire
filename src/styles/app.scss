@@ -17,6 +17,9 @@ body {
     border-radius: 0.16vw * $scale-factor;
     display:inline-block;
     padding-top: .0025em;
+    &.hidden {
+      background: #eee;
+    }
   }
 
   // card containers

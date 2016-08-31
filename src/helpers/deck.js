@@ -4,7 +4,7 @@ export const getNewDeck = () => product(
   range(1, 13),
   ['♠', '♥', '♦', '♣']
 ).map(
-  ([value, suit]) => ({ value, suit })
+  ([value, suit]) => ({ value, suit, hidden: true })
 );
 
 // https://bost.ocks.org/mike/shuffle/

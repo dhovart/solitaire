@@ -38,5 +38,16 @@ describe('getNewState', () => {
         .reduce((a, b) => a && b);
       expect(succedingLengths).to.be.true;
     });
+    it('only have last card shown', () => {
+      const tableauxWithLastCardShown = state.tableaux.map((tableau, i) => tableau.reduce(
+        (bool, card, j) => ((i === j) === !card.hidden) && bool,
+        true
+      ));
+      const allHaveLastCardShown = tableauxWithLastCardShown.reduce((b1, b2) =>
+          b1 && b2,
+        true
+      );
+      expect(allHaveLastCardShown).to.be.true;
+    });
   });
 });

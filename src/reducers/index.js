@@ -31,7 +31,9 @@ const reducer = (state = getNewState(), action) => {
 
   if (type === 'NEW_WASTE_CARD') {
     const nextWaste = [...stock.slice(0, 1)];
-    const nextStock = [...stock.slice(1), ...waste.slice(0, 1)];
+    nextWaste[0] = { ...nextWaste[0], hidden: false }; // reveal
+    const nextUltimateStockCard = waste.length > 0 ? { ...waste[0], hidden: true } : [];
+    const nextStock = [...stock.slice(1)].concat(nextUltimateStockCard);
     return { ...state, waste: nextWaste, stock: nextStock };
   }
 
