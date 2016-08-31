@@ -3,6 +3,13 @@ import getNewState from '../game/new';
 const getCardWithUpdatedVisibility = (card, reveal = true) =>
   ({ ...card, hidden: !reveal });
 
+const revealLastCard = (stack) => {
+  if (stack.length === 0) return stack;
+  return stack.slice(0, -1).concat([getCardWithUpdatedVisibility(
+    ...stack.slice(-1)
+  )]);
+};
+
 const reducer = (state = undefined, action) => {
   if (typeof state === 'undefined' || state === null) {
     state = getNewState();
@@ -17,14 +24,11 @@ const reducer = (state = undefined, action) => {
     // lesser than the greater index of the tableau, we're moving several cards.
     const { to, from, stackPos } = action;
 
-    let revealedCards = [];
-    if (tableaux[from].length > 1) {
-      revealedCards = [getCardWithUpdatedVisibility(
-        ...tableaux[from].slice(stackPos - 1, stackPos)
-      )];
-    }
+    let nextSourceTableau = tableaux[from].slice(0, stackPos);
+    nextSourceTableau = revealLastCard(nextSourceTableau);
+
     const replacingTableaux = {
-      [from]: tableaux[from].slice(0, stackPos - 1).concat(revealedCards),
+      [from]: nextSourceTableau,
       [to]: [...tableaux[to], ...tableaux[from].slice(stackPos)],
     };
     const nextTableaux = Object.assign([], tableaux, replacingTableaux);
@@ -34,14 +38,11 @@ const reducer = (state = undefined, action) => {
   if (type === 'MOVE_TABLEAU_CARD_TO_FOUNDATION') {
     const { from, to } = action;
 
-    let revealedCards = [];
-    if (tableaux[from].length > 1) {
-      revealedCards = [getCardWithUpdatedVisibility(
-        ...tableaux[from].slice(-2, -1)
-      )];
-    }
+    let nextSourceTableau = tableaux[from].slice(0, -1);
+    nextSourceTableau = revealLastCard(nextSourceTableau);
+
     const nextTableaux = Object.assign([], tableaux, {
-      [from]: tableaux[from].slice(0, -2).concat(revealedCards),
+      [from]: nextSourceTableau,
     });
     const nextFoundations = Object.assign([], foundations, {
       [to]: [...foundations[to], ...tableaux[from].slice(-1)],

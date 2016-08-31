@@ -56,6 +56,19 @@ describe('main reducer', () => {
         { suit: '♦', value: 1, hidden: false },
       ]);
     });
+    context('when moving all the cards of a tableau', () => {
+      it('empties the source tableau', () => {
+        const nextState = reducer(state, {
+          type: 'MOVE_TABLEAU_CARDS',
+          from: 0,
+          to: 1,
+          stackPos: 0,
+        });
+        expect(nextState.tableaux[0]).to.have.lengthOf(state.tableaux[0].length - 3);
+        expect(nextState.tableaux[1]).to.have.lengthOf(state.tableaux[1].length + 3);
+        expect(nextState.tableaux[0]).to.eql([]);
+      });
+    });
   });
   describe('MOVE_TABLEAU_CARD_TO_FOUNDATION', () => {
     let state;

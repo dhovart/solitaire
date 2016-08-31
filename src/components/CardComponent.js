@@ -17,7 +17,7 @@ CardComponent.propTypes = {
     suit: PropTypes.string,
     value: PropTypes.number,
     hidden: PropTypes.bool,
-  }),
+  }).isRequired,
 };
 
 export default CardComponent;
