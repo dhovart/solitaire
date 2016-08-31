@@ -44,6 +44,12 @@ const cardSource = {
   },
 };
 
-export default
-  connect(mapStateToProps)
-  (DragSource('wasteCard', cardSource, collectDrag)(WasteContainer));
+export default connect(mapStateToProps)(
+  DragSource(
+    'wasteCard',
+    cardSource,
+    collectDrag
+  )(
+    WasteContainer
+  )
+);

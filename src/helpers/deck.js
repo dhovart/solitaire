@@ -1,5 +1,13 @@
 import { range, product } from './sets';
 
+const suitValue = (suit) =>
+  (0x10 * (0xA + ['♠', '♥', '♦', '♣'].indexOf(suit)));
+
+const getCodePointFor = (suit, value) => // (skip knight)
+  String.fromCodePoint(
+    0x1F000 + suitValue(suit) + ((value >= 12) ? ++value : value)
+  );
+
 export const getNewDeck = () => product(
   range(1, 13),
   ['♠', '♥', '♦', '♣']
@@ -25,9 +33,3 @@ export const shuffle = (array) => {
 
   return array;
 };
-
-const suitValue = (suit) =>
-  (0x10 * (0xA + ['♠', '♥', '♦', '♣'].indexOf(suit)));
-
-const getCodePointFor = (suit, value) => // (skip knight)
-  String.fromCodePoint(0x1F000 + suitValue(suit) + ((value >= 12) ? ++value : value));

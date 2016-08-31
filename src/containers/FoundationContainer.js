@@ -51,7 +51,12 @@ const foundationTarget = {
   },
 };
 
-export default
-  connect()
-  (DropTarget(['wasteCard', 'tableauCard'], foundationTarget, collectDrop)
-  (FoundationContainer));
+export default connect()(
+  DropTarget(
+    ['wasteCard', 'tableauCard'],
+    foundationTarget,
+    collectDrop
+  )(
+    FoundationContainer
+  )
+);

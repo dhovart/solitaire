@@ -26,7 +26,9 @@ const TableauCardContainer = ({
 TableauCardContainer.propTypes = {
   card: PropTypes.shape({
     suit: PropTypes.string,
+    symbol: PropTypes.string,
     value: PropTypes.number,
+    hidden: PropTypes.bool,
   }).isRequired,
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
@@ -76,6 +78,18 @@ const cardTarget = {
   },
 };
 
-export default connect()
-  (DropTarget(['tableauCard', 'wasteCard'], cardTarget, collectDrop)
-  (DragSource('tableauCard', cardSource, collectDrag)(TableauCardContainer)));
+export default connect()(
+  DropTarget(
+    ['tableauCard', 'wasteCard'],
+    cardTarget,
+    collectDrop
+  )(
+    DragSource(
+      'tableauCard',
+      cardSource,
+      collectDrag
+    )(
+      TableauCardContainer
+    )
+  )
+);

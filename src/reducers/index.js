@@ -1,12 +1,12 @@
 import getNewState from '../game/new';
 
-const getCardWithUpdatedVisibility = (card, reveal = true) => {
-  return { ...card, hidden: !reveal };
-};
+const getCardWithUpdatedVisibility = (card, reveal = true) =>
+  ({ ...card, hidden: !reveal });
 
 const reducer = (state = undefined, action) => {
-  if (typeof state === 'undefined' || state === null)
+  if (typeof state === 'undefined' || state === null) {
     state = getNewState();
+  }
   const { tableaux, foundations, stock, waste } = state;
 
   if (typeof action === 'undefined') return state;

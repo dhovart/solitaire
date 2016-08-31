@@ -6,7 +6,7 @@ import { collectDrop } from '../helpers/dnd';
 import TableauCardContainer from '../containers/TableauCardContainer';
 
 const TableauContainer = ({ cards, index, connectDropTarget, highlighted }) => {
-  const classes = classNames('tableau', { 'highlighted': highlighted });
+  const classes = classNames('tableau', { highlighted });
   return connectDropTarget(
     <div className={classes}>
       {cards.map((c, i) =>
@@ -44,7 +44,12 @@ const tableauTarget = {
   },
 };
 
-export default
-  connect()
-  (DropTarget(['wasteCard', 'tableauCard'], tableauTarget, collectDrop)
-  (TableauContainer));
+export default connect()(
+  DropTarget(
+    ['wasteCard', 'tableauCard'],
+    tableauTarget,
+    collectDrop
+  )(
+    TableauContainer
+  )
+);

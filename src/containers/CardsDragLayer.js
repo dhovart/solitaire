@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { DragLayer } from 'react-dnd';
 import CardComponent from '../components/CardComponent';
@@ -15,16 +15,18 @@ const getItemStyles = ({ initialOffset, currentOffset }) => {
     return { display: 'none' };
   }
   const { x, y } = currentOffset;
-  var transform = `translate(${x}px, ${y}px)`;
+  const transform = `translate(${x}px, ${y}px)`;
   return {
     transform,
-    WebkitTransform: transform
+    WebkitTransform: transform,
   };
-}
+};
 
-const renderCards = ({ item, itemType, tableaux }) => {
-  if (!item) return;
-  switch(itemType) {
+const CardsPreview = ({ item, itemType, tableaux }) => {
+  if (!item || !itemType) {
+    return <div />;
+  }
+  switch (itemType) {
     case 'tableauCard':
       const { stackPos, tableau } = item;
       const cards = tableaux[tableau].slice(stackPos);
@@ -46,18 +48,30 @@ const renderCards = ({ item, itemType, tableaux }) => {
           </div>
         </div>
       );
+    default:
+      return <div />;
   }
-}
+};
+
+CardsPreview.propTypes = {
+  item: PropTypes.object,
+  itemType: PropTypes.string,
+  tableaux: PropTypes.array,
+};
 
 const CardsDragLayer = (props) =>
   <div className="drag-layer">
-    <div style={getItemStyles(props)}>{renderCards(props)}</div>
+    <div style={getItemStyles(props)}>
+      <CardsPreview {...props} />
+    </div>
   </div>;
 
 const mapStateToProps = (state) => ({
   tableaux: state.tableaux,
 });
 
-export default
-  connect(mapStateToProps)
-  (DragLayer(collect)(CardsDragLayer));
+export default connect(mapStateToProps)(
+  DragLayer(collect)(
+    CardsDragLayer
+  )
+);
