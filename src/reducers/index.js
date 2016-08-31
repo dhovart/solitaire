@@ -1,11 +1,7 @@
 import getNewState from '../game/new';
 
-// mutate array, only to be used with new items
-const updateLastCardVisibility = (stack, reveal = true) => {
-  if (stack.length === 0) return;
-  const lastIndex = stack.length - 1;
-  const card = stack[lastIndex];
-  stack[lastIndex] = { ...card, hidden: !reveal };
+const getCardWithUpdatedVisibility = (card, reveal = true) => {
+  return { ...card, hidden: !reveal };
 };
 
 const reducer = (state = undefined, action) => {
@@ -17,25 +13,29 @@ const reducer = (state = undefined, action) => {
   const { type } = action;
 
   if (type === 'MOVE_TABLEAU_CARDS') {
-    // stackPos: the position of the first moved card in the source tableau.
-    // if it's lesser than the length of the tableau, we're moving several cards at once
+    // stackPos: the position of the first moved card in the source tableau. If
+    // lesser than the greater index of the tableau, we're moving several cards.
     const { to, from, stackPos } = action;
+
+    const revealedCard = getCardWithUpdatedVisibility(
+      ...tableaux[from].slice(stackPos - 1, stackPos)
+    );
     const replacingTableaux = {
+      [from]: tableaux[from].slice(0, stackPos - 1).concat([revealedCard]),
       [to]: [...tableaux[to], ...tableaux[from].slice(stackPos)],
-      [from]: tableaux[from].slice(0, stackPos),
     };
-    updateLastCardVisibility(replacingTableaux[from]);
     const nextTableaux = Object.assign([], tableaux, replacingTableaux);
     return { ...state, tableaux: nextTableaux };
   }
 
   if (type === 'MOVE_TABLEAU_CARD_TO_FOUNDATION') {
     const { from, to } = action;
+    const revealedCard = getCardWithUpdatedVisibility(
+      ...tableaux[from].slice(-2, -1)
+    );
     const nextTableaux = Object.assign([], tableaux, {
-      [from]: tableaux[from].slice(0, -1),
+      [from]: tableaux[from].slice(0, -2).concat([revealedCard]),
     });
-    updateLastCardVisibility(nextTableaux[from]);
-
     const nextFoundations = Object.assign([], foundations, {
       [to]: [...foundations[to], ...tableaux[from].slice(-1)],
     });
