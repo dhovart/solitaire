@@ -29,7 +29,7 @@ describe('range', () => {
     const end = 3;
     expect(range.bind(start, end)).to.throw();
     expect(range.bind(start, start)).to.throw();
-    expect(range.bind(start, start)).to.throw();
+    expect(range.bind(end, end)).to.throw();
   });
 });
 describe('product', () => {
