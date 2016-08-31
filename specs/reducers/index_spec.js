@@ -84,4 +84,20 @@ describe('main reducer', () => {
       ]);
     });
   });
+  describe('MOVE_WASTE_CARD_TO_TABLEAU', () => {
+    let state, nextState;
+    beforeEach(() => {
+      state = deepFreeze({
+        waste: [{ suit: '♠', value: 5 }],
+        tableaux: [[]],
+      });
+      nextState = reducer(state, { type: 'MOVE_WASTE_CARD_TO_TABLEAU', to: 0 });
+    });
+    it('empties the waste', () => {
+      expect(nextState.waste).to.be.empty;
+    });
+    it('adds a new card to the tableaux', () => {
+      expect(nextState.tableaux).to.eql([[{ suit: '♠', value: 5 }]]);
+    });
+  });
 });

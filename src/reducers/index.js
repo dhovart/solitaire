@@ -30,9 +30,20 @@ const reducer = (state = getNewState(), action) => {
   }
 
   if (type === 'NEW_WASTE_CARD') {
-    const nextWaste = [...stock.slice(0,1)];
+    const nextWaste = [...stock.slice(0, 1)];
     const nextStock = [...stock.slice(1), ...waste.slice(0, 1)];
     return { ...state, waste: nextWaste, stock: nextStock };
   }
+
+  if (type === 'MOVE_WASTE_CARD_TO_TABLEAU') {
+    const { to } = action;
+    const nextWaste = [];
+    const nextTableaux = Object.assign([], tableaux, {
+      [to]: [...tableaux[to], ...waste.slice(0, 1)],
+    });
+    return { ...state, waste: nextWaste, tableaux: nextTableaux };
+  }
+
+  return state;
 };
 export default reducer;
