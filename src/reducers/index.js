@@ -28,5 +28,11 @@ const reducer = (state = getNewState(), action) => {
     });
     return { ...state, tableaux: nextTableaux, foundations: nextFoundations };
   }
+
+  if (type === 'NEW_WASTE_CARD') {
+    const nextWaste = [...stock.slice(0,1)];
+    const nextStock = [...stock.slice(1), ...waste.slice(0, 1)];
+    return { ...state, waste: nextWaste, stock: nextStock };
+  }
 };
 export default reducer;
