@@ -8,102 +8,116 @@ body {
   margin: 0;
 }
 
+@font-face {
+    font-family: 'Apple Symbols';
+    src: url('./assets/fonts/subset-applesymbols.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .solitaire {
   padding: 3vh 0;
   height: 94vh;
   margin: 0;
+}
 
-  .card {
-    border-radius: 0.16vw * $scale-factor;
-    display:inline-block;
-    padding-top: .0025em;
-    height: 100%;
-    display: block;
-    &.hidden {
-      background: #eee;
-    }
-    &.red { 
-      color: #f00;
-    }
-  }
+.card {
+  background: #fff;
+  border-radius: 0.16vw * $scale-factor;
+  display:inline-block;
+  font-family: 'Apple Symbols';
+  font-size: 8vw * $scale-factor;
+  text-align: center;
+  transition: background 150ms ease-out;
+  width: $card-width;
+  line-height: 8.123vw * $scale-factor;
+  padding-top: .0025em;
 
-  // card containers
-  .stock, .waste, .tableau, .foundation {
-    min-height: $card-height;
-    min-width: $card-width;
-    margin: 0 0.436vw * $scale-factor 0.9vw * $scale-factor;
+  &.hidden {
     background: #eee;
   }
-  .stock {
-    cursor: pointer;
+  &.red { 
+    color: #f00;
   }
-  .card-container {
-    background: #fff;
-    border: 1px solid #000;
-    height: $card-height;
-    width: $card-width;
-    & + .card-container {
-      margin-top: -4.9vw * $scale-factor;
-    }
-    &.dragging,
-    &.dragging ~ .card-container {
-      display: none
-    }
-  }
+}
 
-  // main layout
-  .top, .tableaux {
-    display: flex;
-    width: 60vw;
-    margin: 0 auto;
+// card containers
+.stock, .waste, .tableau, .foundation {
+  min-height: $card-height;
+  min-width: $card-width;
+  margin: 0 0.436vw * $scale-factor 0.9vw * $scale-factor;
+  background: #eee;
+}
+.stock {
+  cursor: pointer;
+}
+.card-container {
+  background: #fff;
+  height: $card-height;
+  width: $card-width;
+  overflow: hidden;
+  & + .card-container {
+    margin-top: -4.9vw * $scale-factor;
   }
-  .top, .reserve, .foundations {
-    display: flex;
-    flex-direction: row;
-  }
-  .top {
-    margin: 2vw * $scale-factor auto 1vw * $scale-factor;
-    .foundations {
-      margin-left: auto;
-    }
-  }
-
-  // foundations
-  .foundations {
-    min-height: $card-height;
-    .foundation {
-      position: relative;
-      &:last-child {
-        margin-right: 0.26vw * $scale-factor;
-      }
-      .card {
-        position: absolute;
-        top: 0;
-      }
-    }
-  }
-
-  // tableaux
-  .tableaux {
-    align-items: flex-start;
-    justify-content: center;
-    .tableau {
-      flex-direction: column;
-      margin:0 0.5vw * $scale-factor;
-      min-height: $card-height;
-      width: $card-width;
-    }
-  }
-
-  // drag layer
-  .drag-layer {
-    position: fixed;
-    pointer-events: none;
-    z-index: 100;
-    left: 0;
+  .foundation & {
+    margin-top: 0;
+    position: absolute;
     top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
   }
+  &.dragging,
+  &.dragging ~ .card-container {
+    display: none
+  }
+}
+
+// main layout
+.top, .tableaux {
+  display: flex;
+  width: 60vw;
+  margin: 0 auto;
+}
+.top, .reserve, .foundations {
+  display: flex;
+  flex-direction: row;
+}
+.top {
+  margin: 2vw * $scale-factor auto 1vw * $scale-factor;
+  .foundations {
+    margin-left: auto;
+  }
+}
+
+// foundations
+.foundations {
+  min-height: $card-height;
+  .foundation {
+    position: relative;
+    &:last-child {
+      margin-right: 0.26vw * $scale-factor;
+    }
+  }
+}
+
+// tableaux
+.tableaux {
+  align-items: flex-start;
+  justify-content: center;
+  .tableau {
+    flex-direction: column;
+    margin:0 0.5vw * $scale-factor;
+    min-height: $card-height;
+    width: $card-width;
+  }
+}
+
+// drag layer
+.drag-layer {
+  position: fixed;
+  pointer-events: none;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }

@@ -2,15 +2,13 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
 
 const CardComponent = ({ card }) => {
-  const { suit, value, hidden } = card;
+  const { suit, symbol, hidden } = card;
   const classes = classNames('card', {
     red: !hidden && ['♥', '♦'].includes(suit),
     hidden,
   });
   return (
-    <div className={classes}>
-      {hidden ? '' : `${value} - ${suit}`}
-    </div>
+    <div className={classes}>{hidden ? String.fromCodePoint(0x1F0A0) : symbol}</div>
   );
 };
 

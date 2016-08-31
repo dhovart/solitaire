@@ -4,7 +4,12 @@ export const getNewDeck = () => product(
   range(1, 13),
   ['♠', '♥', '♦', '♣']
 ).map(
-  ([value, suit]) => ({ value, suit, hidden: true })
+  ([value, suit]) => ({
+    value,
+    suit,
+    hidden: true,
+    symbol: getCodePointFor(suit, value),
+  })
 );
 
 // https://bost.ocks.org/mike/shuffle/
@@ -20,3 +25,9 @@ export const shuffle = (array) => {
 
   return array;
 };
+
+const suitValue = (suit) =>
+  (0x10 * (0xA + ['♠', '♥', '♦', '♣'].indexOf(suit)));
+
+const getCodePointFor = (suit, value) => // (skip knight)
+  String.fromCodePoint(0x1F000 + suitValue(suit) + ((value >= 12) ? ++value : value));
