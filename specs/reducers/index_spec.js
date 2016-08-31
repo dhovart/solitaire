@@ -105,4 +105,20 @@ describe('main reducer', () => {
       expect(nextState.tableaux).to.eql([[{ suit: '♠', value: 5 }]]);
     });
   });
+  describe('MOVE_WASTE_CARD_TO_FOUNDATION', () => {
+    let state, nextState;
+    beforeEach(() => {
+      state = deepFreeze({
+        waste: [{ suit: '♠', value: 5 }],
+        foundations: [[], [], [], []],
+      });
+      nextState = reducer(state, { type: 'MOVE_WASTE_CARD_TO_FOUNDATION', to: 2 });
+    });
+    it('empties the waste', () => {
+      expect(nextState.waste).to.be.empty;
+    });
+    it('adds a new card to the foundations', () => {
+      expect(nextState.foundations[2]).to.eql([{ suit: '♠', value: 5 }]);
+    });
+  });
 });

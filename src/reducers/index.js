@@ -46,6 +46,15 @@ const reducer = (state = getNewState(), action) => {
     return { ...state, waste: nextWaste, tableaux: nextTableaux };
   }
 
+  if (type === 'MOVE_WASTE_CARD_TO_FOUNDATION') {
+    const { to } = action;
+    const nextWaste = [];
+    const nextFoundations = Object.assign([], foundations, {
+      [to]: [...foundations[to], ...waste.slice(0, 1)],
+    });
+    return { ...state, waste: nextWaste, foundations: nextFoundations };
+  }
+
   return state;
 };
 export default reducer;

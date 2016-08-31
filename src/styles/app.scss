@@ -17,8 +17,13 @@ body {
     border-radius: 0.16vw * $scale-factor;
     display:inline-block;
     padding-top: .0025em;
+    height: 100%;
+    display: block;
     &.hidden {
       background: #eee;
+    }
+    &.red { 
+      color: #f00;
     }
   }
 

@@ -7,7 +7,9 @@ const StockContainer = ({ stock, onClick }) => {
   const card = !empty ? <CardComponent card={stock[0]} /> : '';
   const style = empty ? { display: 'none' } : {};
   return (
-    <div onClick={onClick} style={style} className="card-container stock">{card}</div>
+    <div onClick={onClick} style={style} className="stock">
+      <div className="card-container">{card}</div>
+    </div>
   );
 };
 
