@@ -13,7 +13,9 @@ const FoundationContainer = ({
   connectDropTarget(
     <div className={classNames('foundation', { highlighted })}>
       {cards.map((c, i) =>
-        <CardComponent key={i} card={c} />
+        <div key={i} className="card-container">
+          <CardComponent card={c} />
+        </div>
       )}
     </div>
   );

@@ -15,7 +15,11 @@ describe('main reducer', () => {
     beforeEach(() => {
       state = deepFreeze({
         tableaux: [
-          [{ suit: '♣', value: 2 }, { suit: '♦', value: 1 }],
+          [
+            { suit: '♣', value: 13, hidden: true },
+            { suit: '♣', value: 2, hidden: false },
+            { suit: '♦', value: 1, hidden: false },
+          ],
           [],
         ],
       });
@@ -25,22 +29,27 @@ describe('main reducer', () => {
         type: 'MOVE_TABLEAU_CARDS',
         from: 0,
         to: 1,
-        stackPos: 1,
+        stackPos: 2,
       });
-      expect(nextState.tableaux[0]).to.eql([{ suit: '♣', value: 2 }]);
-      expect(nextState.tableaux[1]).to.eql([{ suit: '♦', value: 1 }]);
+
+      expect(nextState.tableaux[0]).to.eql([
+        { suit: '♣', value: 13, hidden: true },
+        { suit: '♣', value: 2, hidden: false },
+      ]);
+      expect(nextState.tableaux[1]).to.eql([{ suit: '♦', value: 1, hidden: false }]);
     });
     it('handles stacking multiple cards on top of another card in an other tableau', () => {
       const nextState = reducer(state, {
         type: 'MOVE_TABLEAU_CARDS',
         from: 0,
         to: 1,
-        stackPos: 0,
+        stackPos: 1,
       });
-      expect(nextState.tableaux[0]).to.be.empty;
+
+      expect(nextState.tableaux[0]).to.eql([{ suit: '♣', value: 13, hidden: false }]);
       expect(nextState.tableaux[1]).to.eql([
-        { suit: '♣', value: 2 },
-        { suit: '♦', value: 1 },
+        { suit: '♣', value: 2, hidden: false },
+        { suit: '♦', value: 1, hidden: false },
       ]);
     });
   });
@@ -49,7 +58,7 @@ describe('main reducer', () => {
     beforeEach(() => {
       state = deepFreeze({
         tableaux: [
-          [{ suit: '♣', value: 2 }, { suit: '♦', value: 1 }],
+          [{ suit: '♣', value: 2, hidden: true }, { suit: '♦', value: 1, hidden: false }],
         ],
         foundations: [[], [], [], []],
       });
@@ -60,8 +69,8 @@ describe('main reducer', () => {
         from: 0,
         to: 3,
       });
-      expect(nextState.tableaux[0]).to.eql([{ suit: '♣', value: 2 }]);
-      expect(nextState.foundations[3]).to.eql([{ suit: '♦', value: 1 }]);
+      expect(nextState.tableaux[0]).to.eql([{ suit: '♣', value: 2, hidden: false }]);
+      expect(nextState.foundations[3]).to.eql([{ suit: '♦', value: 1, hidden: false }]);
     });
   });
   describe('NEW_WASTE_CARD', () => {

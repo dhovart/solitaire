@@ -1,5 +1,13 @@
 import getNewState from '../game/new';
 
+// mutate array, only to be used with new items
+const updateLastCardVisibility = (stack, reveal = true) => {
+  if (stack.length === 0) return;
+  const lastIndex = stack.length - 1;
+  const card = stack[lastIndex];
+  stack[lastIndex] = { ...card, hidden: !reveal };
+};
+
 const reducer = (state = getNewState(), action) => {
   const { tableaux, foundations, stock, waste } = state;
 
@@ -14,6 +22,7 @@ const reducer = (state = getNewState(), action) => {
       [to]: [...tableaux[to], ...tableaux[from].slice(stackPos)],
       [from]: tableaux[from].slice(0, stackPos),
     };
+    updateLastCardVisibility(replacingTableaux[from]);
     const nextTableaux = Object.assign([], tableaux, replacingTableaux);
     return { ...state, tableaux: nextTableaux };
   }
@@ -23,6 +32,8 @@ const reducer = (state = getNewState(), action) => {
     const nextTableaux = Object.assign([], tableaux, {
       [from]: tableaux[from].slice(0, -1),
     });
+    updateLastCardVisibility(nextTableaux[from]);
+
     const nextFoundations = Object.assign([], foundations, {
       [to]: [...foundations[to], ...tableaux[from].slice(-1)],
     });
