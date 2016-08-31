@@ -11,13 +11,15 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: 'static',
   },
   plugins: [
     new webpack.DefinePlugin({
-      PRODUCTION: JSON.stringify(false)
+      "process.env": {
+         NODE_ENV: JSON.stringify("development")
+       }
     })
 
   ],

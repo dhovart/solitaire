@@ -1,6 +1,4 @@
 node_modules
 *.log
 .DS_Store
-lib
-coverage
-dist
+static

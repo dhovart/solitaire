@@ -1,15 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   entry: [
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: 'static',
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -19,7 +22,12 @@ module.exports = {
       }
     }),
     new webpack.DefinePlugin({
-      PRODUCTION: JSON.stringify(true)
+      "process.env": {
+         NODE_ENV: JSON.stringify("production") 
+       }
+    }),
+    new ExtractTextPlugin("style.css", {
+        allChunks: true
     })
   ],
   module: {
@@ -32,8 +40,15 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: 'style!css!sass'
-      }
+        loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
+      },
+      {
+        test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+        loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
+      },
     ]
-  }
+  },
+  postcss: function () {
+    return [precss, autoprefixer];
+  },
 };

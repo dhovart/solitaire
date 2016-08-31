@@ -7,7 +7,7 @@ import App from './containers/App';
 import './styles/app.scss';
 
 let enhancers = null;
-if (window.devToolsExtension && !PRODUCTION) {
+if (window.devToolsExtension && process.env.NODE_ENV !== 'production') {
   enhancers = window.devToolsExtension();
 }
 
