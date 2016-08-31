@@ -8,7 +8,9 @@ const updateLastCardVisibility = (stack, reveal = true) => {
   stack[lastIndex] = { ...card, hidden: !reveal };
 };
 
-const reducer = (state = getNewState(), action) => {
+const reducer = (state = undefined, action) => {
+  if (typeof state === 'undefined' || state === null)
+    state = getNewState();
   const { tableaux, foundations, stock, waste } = state;
 
   if (typeof action === 'undefined') return state;
