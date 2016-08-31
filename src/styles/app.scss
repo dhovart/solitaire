@@ -1,0 +1,86 @@
+$scale-factor: 1.5;
+$card-width: 4.845vw * $scale-factor;
+$card-height: 6.48vw * $scale-factor;
+
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.solitaire {
+  padding: 3vh 0;
+  height: 94vh;
+  margin: 0;
+
+  .card {
+    border-radius: 0.16vw * $scale-factor;
+    display:inline-block;
+    padding-top: .0025em;
+  }
+
+  // card containers
+  .stock, .waste, .tableau, .foundation {
+    min-height: $card-height;
+    min-width: $card-width;
+    margin: 0 0.436vw * $scale-factor 0.9vw * $scale-factor;
+    background: #eee;
+  }
+  .stock {
+    cursor: pointer;
+  }
+  .card-container {
+    background: #fff;
+    border: 1px solid #000;
+    height: $card-height;
+    width: $card-width;
+    & + .card-container {
+      margin-top: -4.9vw * $scale-factor;
+    }
+  }
+
+  // main layout
+  .top, .tableaux {
+    display: flex;
+    width: 60vw;
+    margin: 0 auto;
+  }
+  .top, .reserve, .foundations {
+    display: flex;
+    flex-direction: row;
+  }
+  .top {
+    margin: 2vw * $scale-factor auto 1vw * $scale-factor;
+    .foundations {
+      margin-left: auto;
+    }
+  }
+
+  // foundations
+  .foundations {
+    min-height: $card-height;
+    .foundation {
+      position: relative;
+      &:last-child {
+        margin-right: 0.26vw * $scale-factor;
+      }
+      .card {
+        position: absolute;
+        top: 0;
+      }
+    }
+  }
+
+  // tableaux
+  .tableaux {
+    align-items: flex-start;
+    justify-content: center;
+    .tableau {
+      flex-direction: column;
+      margin:0 0.5vw * $scale-factor;
+      min-height: $card-height;
+      width: $card-width;
+    }
+  }
+
+}
