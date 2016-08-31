@@ -1,16 +1,19 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { DragSource } from 'react-dnd';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import classNames from 'classnames/bind';
 import { collectDrag } from '../helpers/dnd';
 import CardComponent from '../components/CardComponent';
 
 const WasteContainer = ({
   connectDragSource,
+  connectDragPreview,
   dragging,
   highlighted,
   waste,
 }) => {
+  connectDragPreview(getEmptyImage());
   const classes = classNames('card-container', { highlighted, dragging });
   return (
     <div className="waste">
@@ -23,6 +26,7 @@ const WasteContainer = ({
 WasteContainer.propTypes = {
   waste: PropTypes.array.isRequired,
   connectDragSource: PropTypes.func.isRequired,
+  connectDragPreview: PropTypes.func.isRequired,
   highlighted: PropTypes.bool,
   dragging: PropTypes.bool,
 };

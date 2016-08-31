@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { DragSource, DropTarget } from 'react-dnd';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import classNames from 'classnames/bind';
 import { collectDrag, collectDrop } from '../helpers/dnd';
 import CardComponent from '../components/CardComponent';
@@ -8,10 +9,12 @@ import CardComponent from '../components/CardComponent';
 const TableauCardContainer = ({
   connectDragSource,
   connectDropTarget,
+  connectDragPreview,
   card,
   highlighted,
   dragging,
 }) => {
+  connectDragPreview(getEmptyImage());
   const classes = classNames('card-container', { highlighted, dragging });
   return connectDropTarget(connectDragSource(
     <div className={classes}>
@@ -25,6 +28,9 @@ TableauCardContainer.propTypes = {
     suit: PropTypes.string,
     value: PropTypes.number,
   }).isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
+  connectDragPreview: PropTypes.func.isRequired,
   highlighted: PropTypes.bool,
   dragging: PropTypes.bool,
 };

@@ -45,6 +45,10 @@ body {
     & + .card-container {
       margin-top: -4.9vw * $scale-factor;
     }
+    &.dragging,
+    &.dragging ~ .card-container {
+      display: none
+    }
   }
 
   // main layout
@@ -91,4 +95,15 @@ body {
     }
   }
 
+  // drag layer
+  .drag-layer {
+    position: fixed;
+    pointer-events: none;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 }

@@ -43,7 +43,6 @@ const foundationTarget = {
         dispatch({ type: 'MOVE_TABLEAU_CARD_TO_FOUNDATION', from, to });
         break;
       case 'wasteCard':
-        console.log('frr');
         dispatch({ type: 'MOVE_WASTE_CARD_TO_FOUNDATION', to });
         break;
       default:

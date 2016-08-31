@@ -5,6 +5,7 @@ import StockContainer from './StockContainer';
 import FoundationsContainer from './FoundationsContainer';
 import TableauxContainer from './TableauxContainer';
 import WasteContainer from './WasteContainer';
+import CardsDragLayer from './CardsDragLayer';
 
 const App = () =>
   <div className="solitaire">
@@ -16,6 +17,7 @@ const App = () =>
       <FoundationsContainer />
     </div>
     <TableauxContainer />
+    <CardsDragLayer />
   </div>;
 
 export default DragDropContext(HTML5Backend)(App);
