@@ -1,11 +1,11 @@
 import React from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import StockContainer from './StockContainer';
-import FoundationsContainer from './FoundationsContainer';
-import TableauxContainer from './TableauxContainer';
-import WasteContainer from './WasteContainer';
-import CardsDragLayer from './CardsDragLayer';
+import Foundations from './Foundations';
+import Tableaux from './Tableaux';
+import StockContainer from '../containers/StockContainer';
+import WasteContainer from '../containers/WasteContainer';
+import CardsDragLayer from '../containers/CardsDragLayer';
 
 const App = () =>
   <div className="solitaire">
@@ -14,9 +14,9 @@ const App = () =>
         <StockContainer />
         <WasteContainer />
       </div>
-      <FoundationsContainer />
+      <Foundations />
     </div>
-    <TableauxContainer />
+    <Tableaux />
     <CardsDragLayer />
   </div>;
 
