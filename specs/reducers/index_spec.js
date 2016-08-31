@@ -32,6 +32,8 @@ describe('main reducer', () => {
         stackPos: 2,
       });
 
+      expect(nextState.tableaux[0]).to.have.lengthOf(state.tableaux[0].length - 1);
+      expect(nextState.tableaux[1]).to.have.lengthOf(state.tableaux[1].length + 1);
       expect(nextState.tableaux[0]).to.eql([
         { suit: '♣', value: 13, hidden: true },
         { suit: '♣', value: 2, hidden: false },
@@ -46,6 +48,8 @@ describe('main reducer', () => {
         stackPos: 1,
       });
 
+      expect(nextState.tableaux[0]).to.have.lengthOf(state.tableaux[0].length - 2);
+      expect(nextState.tableaux[1]).to.have.lengthOf(state.tableaux[1].length + 2);
       expect(nextState.tableaux[0]).to.eql([{ suit: '♣', value: 13, hidden: false }]);
       expect(nextState.tableaux[1]).to.eql([
         { suit: '♣', value: 2, hidden: false },
