@@ -31,7 +31,6 @@ const tableauTarget = {
   },
   drop({ index: to, dispatch }, monitor) {
     const { stackPos, tableau: from } = monitor.getItem();
-    console.log(monitor.getItem());
     switch (monitor.getItemType()) {
       case 'tableauCard':
         dispatch({ type: 'MOVE_TABLEAU_CARDS', stackPos, from, to });
