@@ -29,8 +29,8 @@ const CardsPreview = ({ item, itemType, tableaux }) => {
   }
   switch (itemType) {
     case 'tableauCard':
-      const { index, tableau } = item;
-      const cards = tableaux[tableau].slice(index);
+      const { stackPos, tableau } = item;
+      const cards = tableaux[tableau].slice(stackPos);
       const Stack = List('card', 'cards-dragged')(DraggedCard);
       return (
         <Stack items={cards} />
