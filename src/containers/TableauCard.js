@@ -4,9 +4,9 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import classNames from 'classnames/bind';
 import { collectDrag, collectDrop } from '../helpers/dnd';
-import CardComponent from '../components/CardComponent';
+import Card from '../components/Card';
 
-const TableauCardContainer = ({
+const TableauCard = ({
   connectDragSource,
   connectDropTarget,
   connectDragPreview,
@@ -18,12 +18,12 @@ const TableauCardContainer = ({
   const classes = classNames('card-container', { highlighted, dragging });
   return connectDropTarget(connectDragSource(
     <div className={classes}>
-      <CardComponent card={card} />
+      <Card card={card} />
     </div>
   ));
 };
 
-TableauCardContainer.propTypes = {
+TableauCard.propTypes = {
   card: PropTypes.shape({
     suit: PropTypes.string,
     symbol: PropTypes.string,
@@ -89,7 +89,7 @@ export default connect()(
       cardSource,
       collectDrag
     )(
-      TableauCardContainer
+      TableauCard
     )
   )
 );

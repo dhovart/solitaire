@@ -1,19 +1,17 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import CardComponent from '../components/CardComponent';
+import Card from '../components/Card';
 
-const StockContainer = ({ stock, onClick }) => {
+const Stock = ({ stock, onClick }) => {
   const empty = stock.length === 0;
-  const card = !empty ? <CardComponent card={stock[0]} /> : '';
+  const card = !empty ? <Card card={stock[0]} /> : '';
   const style = empty ? { display: 'none' } : {};
   return (
-    <div onClick={onClick} style={style} className="stock">
-      <div className="card-container">{card}</div>
-    </div>
+    <div onClick={onClick} style={style} className="stock card-container">{card}</div>
   );
 };
 
-StockContainer.propTypes = {
+Stock.propTypes = {
   stock: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
 };
@@ -28,4 +26,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StockContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Stock);

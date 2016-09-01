@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import classNames from 'classnames/bind';
 import { collectDrop } from '../helpers/dnd';
-import TableauCardContainer from '../containers/TableauCardContainer';
+import List from '../components/List';
+import TableauCard from '../containers/TableauCard';
 
+const TableauStack = List('card')(TableauCard);
 const TableauContainer = ({ cards, index, connectDropTarget, highlighted }) => {
   const classes = classNames('tableau', { highlighted });
   return connectDropTarget(
     <div className={classes}>
-      {cards.map((c, i) =>
-        <TableauCardContainer key={i} tableau={index} card={c} stackPos={i} />
-      )}
+      <TableauStack tableau={index} items={cards} />
     </div>
   );
 };
@@ -31,6 +31,7 @@ const tableauTarget = {
   },
   drop({ index: to, dispatch }, monitor) {
     const { stackPos, tableau: from } = monitor.getItem();
+    console.log(monitor.getItem());
     switch (monitor.getItemType()) {
       case 'tableauCard':
         dispatch({ type: 'MOVE_TABLEAU_CARDS', stackPos, from, to });

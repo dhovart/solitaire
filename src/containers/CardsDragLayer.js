@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { DragLayer } from 'react-dnd';
-import CardComponent from '../components/CardComponent';
+import List from '../components/List';
+import DraggedCard from '../components/DraggedCard';
 
 const collect = (monitor) => ({
   item: monitor.getItem(),
@@ -28,24 +29,17 @@ const CardsPreview = ({ item, itemType, tableaux }) => {
   }
   switch (itemType) {
     case 'tableauCard':
-      const { stackPos, tableau } = item;
-      const cards = tableaux[tableau].slice(stackPos);
+      const { index, tableau } = item;
+      const cards = tableaux[tableau].slice(index);
+      const Stack = List('card', 'cards-dragged')(DraggedCard);
       return (
-        <div className="cards-dragged">
-          {cards.map((c, i) =>
-            <div key={i} className="card-container">
-              <CardComponent card={c} />
-            </div>
-          )}
-        </div>
+        <Stack items={cards} />
       );
     case 'wasteCard':
       const { card } = item;
       return (
         <div className="cards-dragged">
-          <div className="card-container">
-            <CardComponent card={card} />
-          </div>
+          <DraggedCard card={card} />
         </div>
       );
     default:
