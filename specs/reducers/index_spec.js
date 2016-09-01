@@ -29,7 +29,7 @@ describe('main reducer', () => {
         type: 'MOVE_TABLEAU_CARDS',
         from: 0,
         to: 1,
-        stackPos: 2,
+        index: 2,
       });
 
       expect(nextState.tableaux[0]).to.have.lengthOf(state.tableaux[0].length - 1);
@@ -45,7 +45,7 @@ describe('main reducer', () => {
         type: 'MOVE_TABLEAU_CARDS',
         from: 0,
         to: 1,
-        stackPos: 1,
+        index: 1,
       });
 
       expect(nextState.tableaux[0]).to.have.lengthOf(state.tableaux[0].length - 2);
@@ -62,7 +62,7 @@ describe('main reducer', () => {
           type: 'MOVE_TABLEAU_CARDS',
           from: 0,
           to: 1,
-          stackPos: 0,
+          index: 0,
         });
         expect(nextState.tableaux[0]).to.have.lengthOf(state.tableaux[0].length - 3);
         expect(nextState.tableaux[1]).to.have.lengthOf(state.tableaux[1].length + 3);

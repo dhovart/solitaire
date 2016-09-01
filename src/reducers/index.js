@@ -20,16 +20,16 @@ const reducer = (state = undefined, action) => {
   const { type } = action;
 
   if (type === 'MOVE_TABLEAU_CARDS') {
-    // stackPos: the position of the first moved card in the source tableau. If
+    // index: the position of the first moved card in the source tableau. If
     // lesser than the greater index of the tableau, we're moving several cards.
-    const { to, from, stackPos } = action;
+    const { to, from, index } = action;
 
-    let nextSourceTableau = tableaux[from].slice(0, stackPos);
+    let nextSourceTableau = tableaux[from].slice(0, index);
     nextSourceTableau = revealLastCard(nextSourceTableau);
 
     const replacingTableaux = {
       [from]: nextSourceTableau,
-      [to]: [...tableaux[to], ...tableaux[from].slice(stackPos)],
+      [to]: [...tableaux[to], ...tableaux[from].slice(index)],
     };
     const nextTableaux = Object.assign([], tableaux, replacingTableaux);
     return { ...state, tableaux: nextTableaux };

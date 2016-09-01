@@ -5,7 +5,7 @@ const List = (itemsPropName, className) => (ComponentListed) => {
     <div className={className || ''}>
       {props.items.map((item, i) => {
         props = { ...props, [itemsPropName]: item };
-        return (<ComponentListed key={i} index={i} stackPos={i} {...props} />);
+        return (<ComponentListed key={i} index={i} {...props} />);
       })}
     </div>;
   List.propTypes = { items: PropTypes.array.isRequired };
