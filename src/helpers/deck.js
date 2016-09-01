@@ -33,3 +33,14 @@ export const shuffle = (array) => {
 
   return array;
 };
+
+const black = ['♠', '♣'];
+const red = ['♥', '♦'];
+
+export const matchingTableauCards = (card, otherCard) => {
+  const ofOppositeColor = black.includes(card.suit) ?
+    red.includes(otherCard.suit) :
+    black.includes(otherCard.suit);
+  return ofOppositeColor && otherCard.value === card.value - 1;
+};
+

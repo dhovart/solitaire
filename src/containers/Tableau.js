@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import classNames from 'classnames/bind';
 import { collectDrop } from '../helpers/dnd';
+import { matchingTableauCards } from '../helpers/deck';
 import List from '../components/List';
 import TableauCard from '../containers/TableauCard';
 
@@ -23,22 +24,12 @@ TableauContainer.propTypes = {
   highlighted: PropTypes.bool,
 };
 
-const black = ['♠', '♣'];
-const red = ['♥', '♦'];
-
-const matchingCards = (card, otherCard) => {
-  const ofOppositeColor = black.includes(card.suit) ?
-    red.includes(otherCard.suit) :
-    black.includes(otherCard.suit);
-  return ofOppositeColor && otherCard.value === card.value - 1;
-};
-
 const tableauTarget = {
   canDrop({ index: to, cards }, monitor) {
     const { tableau: from, card } = monitor.getItem();
     if (to === from) return false;
     if (cards.length === 0) return card.value === 13;
-    return matchingCards(cards[cards.length - 1], card);
+    return matchingTableauCards(cards[cards.length - 1], card);
   },
   drop({ index: to, dispatch }, monitor) {
     const { stackPos, tableau: from } = monitor.getItem();
