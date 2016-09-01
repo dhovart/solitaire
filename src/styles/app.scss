@@ -68,6 +68,9 @@ body {
 
   &.highlighted {
     background: #dadada;
+    & > div .card-container:last-child {
+      transform: scale(1.1, 1.1);
+    }
   }
 }
 .stock {
@@ -83,9 +86,6 @@ body {
 
   & + .card-container {
     margin-top: -4.9vw * $scale-factor;
-  }
-  &.highlighted {
-    transform: scale(1.1, 1.1);
   }
   &.dragging,
   &.dragging ~ .card-container {

@@ -23,11 +23,22 @@ TableauContainer.propTypes = {
   highlighted: PropTypes.bool,
 };
 
+const black = ['♠', '♣'];
+const red = ['♥', '♦'];
+
+const matchingCards = (card, otherCard) => {
+  const ofOppositeColor = black.includes(card.suit) ?
+    red.includes(otherCard.suit) :
+    black.includes(otherCard.suit);
+  return ofOppositeColor && otherCard.value === card.value - 1;
+};
+
 const tableauTarget = {
   canDrop({ index: to, cards }, monitor) {
     const { tableau: from, card } = monitor.getItem();
     if (to === from) return false;
-    return cards.length === 0 && card.value === 13;
+    if (cards.length === 0) return card.value === 13;
+    return matchingCards(cards[cards.length - 1], card);
   },
   drop({ index: to, dispatch }, monitor) {
     const { stackPos, tableau: from } = monitor.getItem();
