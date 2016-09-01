@@ -19,8 +19,25 @@ body {
   padding: 3vh 0;
   height: 94vh;
   margin: 0;
+  user-select: none;
 }
 
+.card.flash-appear {
+  opacity: 0.5;
+  transform: scale(1.03, 1.03);
+}
+.card.flash-appear.flash-appear-active {
+  opacity: 1;
+  transform: scale(1.0, 1.0);
+  transition: opacity 0.4s ease-out,
+              transform 0.2s ease-out;
+}
+.cards-dragged .card.flash-appear {
+  background: #fff;
+  opacity: 1;
+  transition: none;
+  transform: scale(1.0, 1.0);
+}
 .card {
   background: #fff;
   border-radius: 0.16vw * $scale-factor;
@@ -47,6 +64,11 @@ body {
   min-width: $card-width;
   margin: 0 0.436vw * $scale-factor 0.9vw * $scale-factor;
   background: #eee;
+  transition: background 150ms ease-out;
+
+  &.highlighted {
+    background: #dadada;
+  }
 }
 .stock {
   cursor: pointer;
@@ -56,17 +78,22 @@ body {
   height: $card-height;
   width: $card-width;
   overflow: hidden;
+  position: relative;
+  transition: transform 60ms ease-out;
+
   & + .card-container {
     margin-top: -4.9vw * $scale-factor;
   }
-  .foundation & {
-    margin-top: 0;
-    position: absolute;
-    top: 0;
+  &.highlighted {
+    transform: scale(1.1, 1.1);
   }
   &.dragging,
   &.dragging ~ .card-container {
-    display: none
+    //display: none
+    .card {
+      background: #ccc;
+      opacity: 0.4;
+    }
   }
 }
 
@@ -89,9 +116,14 @@ body {
 
 // foundations
 .foundations {
-  min-height: $card-height;
+  height: $card-height;
+  overflow: hidden;
   .foundation {
     position: relative;
+    .card {
+      position: absolute;
+      top: 0;
+    }
     &:last-child {
       margin-right: 0.26vw * $scale-factor;
     }
@@ -120,6 +152,12 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.cards-dragged {
+  .card-container {
+    transform: scale(1.1, 1.1);
+  }
 }
 
 footer {

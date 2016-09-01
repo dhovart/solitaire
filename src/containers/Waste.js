@@ -4,9 +4,9 @@ import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import classNames from 'classnames/bind';
 import { collectDrag } from '../helpers/dnd';
-import CardComponent from '../components/CardComponent';
+import Card from '../components/Card';
 
-const WasteContainer = ({
+const Waste = ({
   connectDragSource,
   connectDragPreview,
   dragging,
@@ -18,12 +18,12 @@ const WasteContainer = ({
   return (
     <div className="waste">
       {waste.map((c, i) =>
-        connectDragSource(<div className={classes} key={i}><CardComponent card={c} /></div>))}
+        connectDragSource(<div className={classes} key={i}><Card card={c} /></div>))}
     </div>
   );
 };
 
-WasteContainer.propTypes = {
+Waste.propTypes = {
   waste: PropTypes.array.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   connectDragPreview: PropTypes.func.isRequired,
@@ -50,6 +50,6 @@ export default connect(mapStateToProps)(
     cardSource,
     collectDrag
   )(
-    WasteContainer
+    Waste
   )
 );

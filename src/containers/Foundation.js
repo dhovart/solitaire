@@ -3,25 +3,21 @@ import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import classNames from 'classnames/bind';
 import { collectDrop } from '../helpers/dnd';
-import CardComponent from '../components/CardComponent';
+import List from '../components/List';
+import Card from '../components/Card';
 
-const FoundationContainer = ({
-  connectDropTarget,
-  highlighted,
-  cards,
-}) =>
+const FoundationStack = List('card')(Card);
+const Foundation = ({ connectDropTarget, highlighted, cards }) =>
   connectDropTarget(
     <div className={classNames('foundation', { highlighted })}>
-      {cards.map((c, i) =>
-        <div key={i} className="card-container">
-          <CardComponent card={c} />
-        </div>
-      )}
+      <FoundationStack items={cards} />
     </div>
   );
 
-FoundationContainer.propTypes = {
-  cards: PropTypes.array,
+Foundation.propTypes = {
+  cards: PropTypes.array.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
+  highlighted: PropTypes.bool.isRequired,
 };
 
 const accepts = (card, otherCard) =>
@@ -57,6 +53,6 @@ export default connect()(
     foundationTarget,
     collectDrop
   )(
-    FoundationContainer
+    Foundation
   )
 );
