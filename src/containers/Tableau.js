@@ -2,16 +2,18 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import classNames from 'classnames/bind';
+import { areas } from '../game/constants';
 import { collectDrop } from '../helpers/dnd';
+import { matchingTableauxCards } from '../game/constraints';
 import List from '../components/List';
-import TableauCard from '../containers/TableauCard';
+import DraggableCard from '../containers/DraggableCard';
 
-const TableauStack = List('card')(TableauCard);
+const TableauStack = List('card')(DraggableCard);
 const TableauContainer = ({ cards, index, connectDropTarget, highlighted }) => {
   const classes = classNames('tableau', { highlighted });
   return connectDropTarget(
     <div className={classes}>
-      <TableauStack tableau={index} items={cards} />
+      <TableauStack stackNumber={index} area={areas.TABLEAUX} items={cards} />
     </div>
   );
 };
@@ -23,30 +25,26 @@ TableauContainer.propTypes = {
   highlighted: PropTypes.bool,
 };
 
+const prepareSourceData = ({ area, stackNumber, index: stackIndex }) =>
+  ({ area, stackNumber, stackIndex });
+
 const tableauTarget = {
   canDrop({ index: to, cards }, monitor) {
-    const { tableau: from, card } = monitor.getItem();
-    if (to === from) return false;
-    return cards.length === 0 && card.value === 13;
+    const { stackNumber: from, area, card } = monitor.getItem();
+    if (area === areas.TABLEAUX && to === from) return false;
+    if (cards.length === 0) return card.value === 13;
+    return matchingTableauxCards(cards[cards.length - 1], card);
   },
-  drop({ index: to, dispatch }, monitor) {
-    const { stackPos, tableau: from } = monitor.getItem();
-    switch (monitor.getItemType()) {
-      case 'tableauCard':
-        dispatch({ type: 'MOVE_TABLEAU_CARDS', stackPos, from, to });
-        break;
-      case 'wasteCard':
-        dispatch({ type: 'MOVE_WASTE_CARD_TO_TABLEAU', to });
-        break;
-      default:
-        return;
-    }
+  drop({ index, dispatch }, monitor) {
+    const from = monitor.getItem();
+    const to = { area: areas.TABLEAUX, stackNumber: index };
+    dispatch({ type: 'MOVE_CARDS', to, from });
   },
 };
 
 export default connect()(
   DropTarget(
-    ['wasteCard', 'tableauCard'],
+    'card',
     tableauTarget,
     collectDrop
   )(

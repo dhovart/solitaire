@@ -13,9 +13,9 @@ const { suit, symbol, hidden } = card;
       component="div"
       transitionAppear={true}
       transitionName="flash"
-      transitionEnterTimeout={5000}
-      transitionLeaveTimeout={5000}
-      transitionAppearTimeout={5000}>
+      transitionEnterTimeout={500}
+      transitionLeaveTimeout={500}
+      transitionAppearTimeout={500}>
       <div className={classes}>{hidden ? String.fromCodePoint(0x1F0A0) : symbol}</div>
     </ReactCSSTransitionGroup>
   );

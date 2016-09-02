@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { DragLayer } from 'react-dnd';
+import { areas } from '../game/constants';
 import List from '../components/List';
-import DraggedCard from '../components/DraggedCard';
+import Card from '../components/Card';
+import Wrapper from '../components/Wrapper';
 
 const collect = (monitor) => ({
   item: monitor.getItem(),
@@ -23,25 +24,18 @@ const getItemStyles = ({ initialOffset, currentOffset }) => {
   };
 };
 
-const CardsPreview = ({ item, itemType, tableaux }) => {
-  if (!item || !itemType) {
-    return <div />;
-  }
-  switch (itemType) {
-    case 'tableauCard':
-      const { stackPos, tableau } = item;
-      const cards = tableaux[tableau].slice(stackPos);
-      const Stack = List('card', 'cards-dragged')(DraggedCard);
-      return (
-        <Stack items={cards} />
-      );
-    case 'wasteCard':
-      const { card } = item;
-      return (
-        <div className="cards-dragged">
-          <DraggedCard card={card} />
-        </div>
-      );
+const CardsPreview = ({ item }) => {
+  if (!item) return <div />;
+  const { index, card, area, items } = item;
+  switch (area) {
+    case areas.WASTE:
+      const WrappedCard = Wrapper('card-container dragged')(Card);
+      return <WrappedCard card={card} />;
+
+    case areas.TABLEAUX:
+      const Stack = List('card')(Wrapper('card-container dragged')(Card));
+      return <Stack items={items.slice(index)} />;
+
     default:
       return <div />;
   }
@@ -49,8 +43,6 @@ const CardsPreview = ({ item, itemType, tableaux }) => {
 
 CardsPreview.propTypes = {
   item: PropTypes.object,
-  itemType: PropTypes.string,
-  tableaux: PropTypes.array,
 };
 
 const CardsDragLayer = (props) =>
@@ -60,12 +52,4 @@ const CardsDragLayer = (props) =>
     </div>
   </div>;
 
-const mapStateToProps = (state) => ({
-  tableaux: state.tableaux,
-});
-
-export default connect(mapStateToProps)(
-  DragLayer(collect)(
-    CardsDragLayer
-  )
-);
+export default DragLayer(collect)(CardsDragLayer);
