@@ -2,14 +2,22 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import classNames from 'classnames/bind';
+import flow from 'lodash.flow';
 import { areas } from '../game/constants';
 import { collectDrop } from '../helpers/dnd';
-import { matchingTableauxCards } from '../game/constraints';
 import List from '../components/List';
 import DraggableCard from '../containers/DraggableCard';
+import CardsMatcher from '../containers/CardsMatcher';
+import { tableauComparator, allowOnEmptyTableau } from '../game/cardMatchers';
 
 const TableauStack = List('card')(DraggableCard);
-const TableauContainer = ({ cards, index, connectDropTarget, highlighted }) => {
+const Tableau = ({
+  cards,
+  index,
+  connectDropTarget,
+  highlighted,
+  ...props
+}) => {
   const classes = classNames('tableau', { highlighted });
   return connectDropTarget(
     <div className={classes}>
@@ -18,7 +26,7 @@ const TableauContainer = ({ cards, index, connectDropTarget, highlighted }) => {
   );
 };
 
-TableauContainer.propTypes = {
+Tableau.propTypes = {
   cards: PropTypes.array.isRequired,
   index: PropTypes.number.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
@@ -26,11 +34,9 @@ TableauContainer.propTypes = {
 };
 
 const tableauTarget = {
-  canDrop({ index: to, cards }, monitor) {
-    const { stackNumber: from, area, card } = monitor.getItem();
-    if (area === areas.TABLEAUX && to === from) return false;
-    if (cards.length === 0) return card.value === 13;
-    return matchingTableauxCards(cards[cards.length - 1], card);
+  canDrop({ isAllowed }, monitor) {
+    const { card } = monitor.getItem();
+    return isAllowed(card);
   },
   drop({ index, dispatch }, monitor) {
     const from = monitor.getItem();
@@ -39,12 +45,7 @@ const tableauTarget = {
   },
 };
 
-export default connect()(
-  DropTarget(
-    'card',
-    tableauTarget,
-    collectDrop
-  )(
-    TableauContainer
-  )
-);
+export default flow(
+  DropTarget('card', tableauTarget, collectDrop),
+  CardsMatcher(tableauComparator, allowOnEmptyTableau)
+)(Tableau);
