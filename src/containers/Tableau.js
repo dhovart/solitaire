@@ -13,7 +13,7 @@ const TableauContainer = ({ cards, index, connectDropTarget, highlighted }) => {
   const classes = classNames('tableau', { highlighted });
   return connectDropTarget(
     <div className={classes}>
-      <TableauStack sourceIndex={index} source={areas.TABLEAU} items={cards} />
+      <TableauStack stackNumber={index} area={areas.TABLEAUX} items={cards} />
     </div>
   );
 };
@@ -25,27 +25,20 @@ TableauContainer.propTypes = {
   highlighted: PropTypes.bool,
 };
 
+const prepareSourceData = ({ area, stackNumber, index: stackIndex }) =>
+  ({ area, stackNumber, stackIndex });
+
 const tableauTarget = {
   canDrop({ index: to, cards }, monitor) {
-    const { sourceIndex: from, card } = monitor.getItem();
-    if (to === from) return false;
+    const { stackNumber: from, area, card } = monitor.getItem();
+    if (area === areas.TABLEAUX && to === from) return false;
     if (cards.length === 0) return card.value === 13;
     return matchingTableauxCards(cards[cards.length - 1], card);
   },
-  drop({ index: to, dispatch }, monitor) {
-    const { index, source, sourceIndex: from } = monitor.getItem();
-    switch (source) {
-      case areas.TABLEAU:
-        dispatch({ type: 'MOVE_TABLEAU_CARDS', to, from, index });
-        break;
-
-      case areas.WASTE:
-        dispatch({ type: 'MOVE_WASTE_CARD_TO_TABLEAU', to });
-        break;
-
-      default:
-        return;
-    }
+  drop({ index, dispatch }, monitor) {
+    const from = monitor.getItem();
+    const to = { area: areas.TABLEAUX, stackNumber: index };
+    dispatch({ type: 'MOVE_CARDS', to, from });
   },
 };
 

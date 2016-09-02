@@ -1,5 +1,6 @@
 export const areas = {
-  WASTE: Symbol('waste'),
-  FOUNDATION: Symbol('foundation'),
-  TABLEAU: Symbol('tableau'),
+  STOCK: 'stock',
+  WASTE: 'waste',
+  FOUNDATIONS: 'foundations',
+  TABLEAUX: 'tableaux',
 };

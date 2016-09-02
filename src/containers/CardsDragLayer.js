@@ -26,13 +26,13 @@ const getItemStyles = ({ initialOffset, currentOffset }) => {
 
 const CardsPreview = ({ item }) => {
   if (!item) return <div />;
-  const { index, card, source, items } = item;
-  switch (source) {
+  const { index, card, area, items } = item;
+  switch (area) {
     case areas.WASTE:
       const WrappedCard = Wrapper('card-container dragged')(Card);
       return <WrappedCard card={card} />;
 
-    case areas.TABLEAU:
+    case areas.TABLEAUX:
       const Stack = List('card')(Wrapper('card-container dragged')(Card));
       return <Stack items={items.slice(index)} />;
 

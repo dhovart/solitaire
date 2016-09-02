@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Card from '../components/Card';
+import { areas } from '../game/constants';
 
 const Stock = ({ stock, onClick }) => {
   const empty = stock.length === 0;
@@ -17,7 +18,7 @@ Stock.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  stock: state.stock,
+  stock: state[areas.STOCK],
 });
 
 const mapDispatchToProps = (dispatch) => ({

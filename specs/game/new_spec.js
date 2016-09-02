@@ -1,6 +1,7 @@
 /* eslint no-undef: "error" */
 /* global describe it expect */
 
+import { areas } from '../../src/game/constants';
 import getNewState from '../../src/game/new';
 
 const state = getNewState();
