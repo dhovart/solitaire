@@ -30,18 +30,10 @@ const foundationTarget = {
     }
     return matchingFoundationCards(cards[cards.length - 1], card);
   },
-  drop({ index: to, dispatch }, monitor) {
-    const { sourceIndex: from, source } = monitor.getItem();
-    switch (source) {
-      case areas.TABLEAU:
-        dispatch({ type: 'MOVE_TABLEAU_CARD_TO_FOUNDATION', from, to });
-        break;
-      case areas.WASTE:
-        dispatch({ type: 'MOVE_WASTE_CARD_TO_FOUNDATION', to });
-        break;
-      default:
-        return;
-    }
+  drop({ index, dispatch }, monitor) {
+    const from = monitor.getItem();
+    const to = { area: areas.FOUNDATIONS, stackNumber: index };
+    dispatch({ type: 'MOVE_CARDS', to, from });
   },
 };
 

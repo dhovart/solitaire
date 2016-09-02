@@ -1,3 +1,4 @@
+import { areas } from './constants';
 import { getNewDeck, shuffle } from '../helpers/deck';
 
 const deck = shuffle(getNewDeck());
@@ -11,9 +12,9 @@ tableaux.forEach((tableau, i) => {
   card.hidden = false;
 });
 const getNewState = () => ({
-  stock: deck,
-  foundations,
-  waste,
-  tableaux,
+  [areas.STOCK]: deck,
+  [areas.WASTE]: waste,
+  [areas.TABLEAUX]: tableaux,
+  [areas.FOUNDATIONS]: foundations,
 });
 export default getNewState;

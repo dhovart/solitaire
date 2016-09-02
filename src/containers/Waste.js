@@ -7,7 +7,8 @@ import Wrapper from '../components/Wrapper';
 const WasteCard = Wrapper('card-container')(DraggableCard);
 const Waste = ({ waste }) =>
   <div className="waste">
-    {waste.map((c, i) => <WasteCard key={i} card={c} index={i} source={areas.WASTE} />)}
+    {waste.map((c, i) =>
+      <WasteCard key={i} card={c} index={i} area={areas.WASTE} stackNumber={0} />)}
   </div>;
 Waste.propTypes = { waste: PropTypes.array.isRequired };
 const mapStateToProps = (state) => ({ waste: state.waste });
