@@ -25,9 +25,6 @@ TableauContainer.propTypes = {
   highlighted: PropTypes.bool,
 };
 
-const prepareSourceData = ({ area, stackNumber, index: stackIndex }) =>
-  ({ area, stackNumber, stackIndex });
-
 const tableauTarget = {
   canDrop({ index: to, cards }, monitor) {
     const { stackNumber: from, area, card } = monitor.getItem();
