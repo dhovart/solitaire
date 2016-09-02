@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import classNames from 'classnames/bind';
+import { isRed } from '../helpers/deck';
 
 const Card = ({ card }) => {
-const { suit, symbol, hidden } = card;
+const { symbol, hidden } = card;
   const classes = classNames('card', {
-    red: !hidden && ['♥', '♦'].includes(suit),
+    red: !hidden && isRed(card),
     hidden,
   });
   return (
