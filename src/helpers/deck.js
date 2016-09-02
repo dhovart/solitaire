@@ -33,3 +33,6 @@ export const shuffle = (array) => {
 
   return array;
 };
+
+export const isRed = (card) => ['♠', '♣'].includes(card.suit);
+export const isBlack = (card) => ['♠', '♣'].includes(card.suit);
