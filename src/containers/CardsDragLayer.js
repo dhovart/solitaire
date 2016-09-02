@@ -1,9 +1,6 @@
 import React, { PropTypes } from 'react';
 import { DragLayer } from 'react-dnd';
-import { areas } from '../game/constants';
-import List from '../components/List';
-import Card from '../components/Card';
-import Wrapper from '../components/Wrapper';
+import CardsPreview from '../components/CardsPreview';
 
 const collect = (monitor) => ({
   item: monitor.getItem(),
@@ -22,27 +19,6 @@ const getItemStyles = ({ initialOffset, currentOffset }) => {
     transform,
     WebkitTransform: transform,
   };
-};
-
-const CardsPreview = ({ item }) => {
-  if (!item) return <div />;
-  const { index, card, area, items } = item;
-  switch (area) {
-    case areas.WASTE:
-      const WrappedCard = Wrapper('card-container dragged')(Card);
-      return <WrappedCard card={card} />;
-
-    case areas.TABLEAUX:
-      const Stack = List('card')(Wrapper('card-container dragged')(Card));
-      return <Stack items={items.slice(index)} />;
-
-    default:
-      return <div />;
-  }
-};
-
-CardsPreview.propTypes = {
-  item: PropTypes.object,
 };
 
 const CardsDragLayer = (props) =>
