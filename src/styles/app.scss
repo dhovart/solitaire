@@ -1,6 +1,6 @@
 $scale-factor: 1.5;
-$card-width: 4.845vw * $scale-factor;
-$card-height: 6.48vw * $scale-factor;
+$card-width: 4.846vw * $scale-factor;
+$card-height: 6.45vw * $scale-factor;
 
 body {
   box-sizing: border-box;
@@ -22,34 +22,13 @@ body {
   user-select: none;
 }
 
-.card.flash-appear {
-  opacity: 0.5;
-  transform: scale(1.03, 1.03);
-}
-.card.flash-appear.flash-appear-active {
-  opacity: 1;
-  transform: scale(1.0, 1.0);
-  transition: opacity 0.4s ease-out,
-              transform 0.2s ease-out;
-}
-
-.card-container.dragged {
-  transform: scale(1.1, 1.1);
-}
-.dragged .card.flash-appear {
-  background: #fff;
-  opacity: 1;
-  transition: none;
-  transform: scale(1.0, 1.0);
-}
 .card {
   background: #fff;
-  border-radius: 0.16vw * $scale-factor;
   display:inline-block;
   font-family: 'Apple Symbols';
   font-size: 8vw * $scale-factor;
   text-align: center;
-  transition: background 150ms ease-out;
+  transition: opacity 100ms ease-in;
   width: $card-width;
   line-height: 8.123vw * $scale-factor;
   padding-top: .0025em;
@@ -59,6 +38,21 @@ body {
   }
   &.red { 
     color: #f00;
+  }
+  &.flash-appear, &.flash-enter {
+    opacity: 0.2;
+    transform: scale(1.03, 1.03);
+    &.flash-appear-active,
+    &.flash-enter-active {
+      opacity: 1;
+      transform: scale(1.0, 1.0);
+      transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    }
+    .drag-preview &, &.hidden {
+      opacity: 1;
+      transition: none;
+      transform: scale(1.0, 1.0);
+    }
   }
 }
 
@@ -72,8 +66,9 @@ body {
 
   &.highlighted {
     background: #dadada;
-    & > div .card-container:last-child {
+    .card-container:last-child {
       transform: scale(1.1, 1.1);
+      box-shadow: 7px 0px 33px -8px #ccc;
     }
   }
 }
@@ -81,23 +76,35 @@ body {
   cursor: pointer;
 }
 .card-container {
-  background: #fff;
+  border-radius: 0.16vw * $scale-factor;
   height: $card-height;
   width: $card-width;
   overflow: hidden;
   position: relative;
-  transition: transform 60ms ease-out;
+  transition: margin-top 100ms ease-in-out, transform 80ms ease-out;
+
+  @for $i from 1 through 7 {
+    &:nth-child(#{$i}) {
+      transition: margin-top ($i * 150ms) ease-in-out, transform 80ms ease-out;
+    }
+  }
 
   & + .card-container {
     margin-top: -4.9vw * $scale-factor;
   }
+  // source
   &.dragging,
   &.dragging ~ .card-container {
-    //display: none
     .card {
-      background: #ccc;
-      opacity: 0.4;
+      background: #eee;
+      opacity: 0.6;
     }
+  }
+  // drag preview
+  &.drag-preview {
+    transform: scale(1.1, 1.1);
+    box-shadow: 7px 0px 33px -8px #ccc;
+    opacity: 1;
   }
 }
 
@@ -121,11 +128,11 @@ body {
 // foundations
 .foundations {
   height: $card-height;
-  overflow: hidden;
   .foundation {
     position: relative;
-    .card {
+    .card-container {
       position: absolute;
+      margin: 0;
       top: 0;
     }
     &:last-child {
@@ -143,6 +150,23 @@ body {
     margin:0 0.5vw * $scale-factor;
     min-height: $card-height;
     width: $card-width;
+    .card-container {
+      box-shadow: 0 -3px 5px -4px rgba(70,70,70,0.5);
+      &:first-child {
+        box-shadow: none;
+      }
+    }
+    .slide-appear, .slide-enter {
+      .card-container + .card-container {
+        margin-top: -$card-height;
+      }
+      .slide-appear-active,
+      .slide-enter-active {
+        .card-container {
+          margin-top: inherit;
+        }
+      }
+    }
   }
 }
 

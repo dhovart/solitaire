@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import classNames from 'classnames/bind';
@@ -21,7 +22,15 @@ const Tableau = ({
   const classes = classNames('tableau', { highlighted });
   return connectDropTarget(
     <div className={classes}>
-      <TableauStack stackNumber={index} area={areas.TABLEAUX} items={cards} />
+      <ReactCSSTransitionGroup
+        component="div"
+        transitionAppear={true}
+        transitionName="slide"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}
+        transitionAppearTimeout={500}>
+        <TableauStack stackNumber={index} area={areas.TABLEAUX} items={cards} />
+      </ReactCSSTransitionGroup>
     </div>
   );
 };
