@@ -17,7 +17,9 @@ const { symbol, hidden } = card;
       transitionEnterTimeout={500}
       transitionLeaveTimeout={500}
       transitionAppearTimeout={500}>
-      <div className={classes}>{hidden ? String.fromCodePoint(0x1F0A0) : symbol}</div>
+      <div key={symbol} className={classes}>
+        {hidden ? String.fromCodePoint(0x1F0A0) : symbol}
+      </div>
     </ReactCSSTransitionGroup>
   );
 };
