@@ -6,11 +6,12 @@ import flow from 'lodash.flow';
 import { areas } from '../game/constants';
 import { collectDrop } from '../helpers/dnd';
 import List from '../components/List';
+import Wrapper from '../components/Wrapper';
 import Card from '../components/Card';
 import CardsMatcher from '../containers/CardsMatcher';
 import { foundationComparator, allowOnEmptyFoundation } from '../game/cardMatchers';
 
-const FoundationStack = List('card')(Card);
+const FoundationStack = List('card')(Wrapper('card-container')(Card));
 const Foundation = ({ connectDropTarget, highlighted, cards }) =>
   connectDropTarget(
     <div className={classNames('foundation', { highlighted })}>

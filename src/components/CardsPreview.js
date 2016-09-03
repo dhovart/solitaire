@@ -9,11 +9,11 @@ const CardsPreview = ({ item }) => {
   const { index, card, area, items } = item;
   switch (area) {
     case areas.WASTE:
-      const WrappedCard = Wrapper('card-container dragged')(Card);
+      const WrappedCard = Wrapper('card-container drag-preview')(Card);
       return <WrappedCard card={card} />;
 
     case areas.TABLEAUX:
-      const Stack = List('card')(Wrapper('card-container dragged')(Card));
+      const Stack = List('card')(Wrapper('card-container drag-preview')(Card));
       return <Stack items={items.slice(index)} />;
 
     default:

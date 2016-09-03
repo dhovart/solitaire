@@ -2,9 +2,10 @@ import flow from 'lodash.flow';
 import { values } from './constants';
 import { isBlack, isRed } from '../helpers/deck';
 
-const combineComparators = (card, ...comparators) => (target) =>
-    comparators.reduce((prev, cur) =>
-      prev(card)(target) && cur(card)(target));
+const combineComparators = (card, ...comparators) => {
+  const boundComparators = comparators.map(c => c(card));
+  return (target) => boundComparators.reduce((prev, cur) => prev(target) && cur(target));
+};
 
 const isSuccessor = (comparedAgainst) => (card) =>
   comparedAgainst.value === card.value + 1;
