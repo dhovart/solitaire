@@ -1,6 +1,6 @@
+import undoable, { distinctState } from 'redux-undo';
 import getNewState from '../game/new';
-import moveCards from './moveCards';
-import newWasteCard from './newWasteCard';
+import { moveCards, newWaste } from './cards';
 
 const reducer = (state = undefined, action) => {
   if (typeof state === 'undefined' || state === null) {
@@ -13,7 +13,7 @@ const reducer = (state = undefined, action) => {
     return moveCards(state, action);
   }
   if (action.type === 'NEW_WASTE_CARD') {
-    return newWasteCard(state);
+    return newWaste(state);
   }
   return state;
 };
