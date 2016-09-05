@@ -1,4 +1,3 @@
-import flow from 'lodash.flow';
 import { values } from './constants';
 import { isBlack, isRed } from '../helpers/deck';
 
