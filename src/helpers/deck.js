@@ -3,7 +3,7 @@ import { range, product } from './sets';
 const suitValue = (suit) =>
   (0x10 * (0xA + ['♠', '♥', '♦', '♣'].indexOf(suit)));
 
-const getCodePointFor = (suit, value) => // (skip knight)
+const getSymbolFor = (suit, value) => // (skip knight)
   String.fromCodePoint(
     0x1F000 + suitValue(suit) + ((value >= 12) ? ++value : value)
   );
@@ -16,7 +16,7 @@ export const getNewDeck = () => product(
     value,
     suit,
     hidden: true,
-    symbol: getCodePointFor(suit, value),
+    symbol: getSymbolFor(suit, value),
   })
 );
 

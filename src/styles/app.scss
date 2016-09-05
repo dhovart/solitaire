@@ -1,8 +1,9 @@
 $scale-factor: 1.5;
-$card-width: 4.846vw * $scale-factor;
-$card-height: 6.45vw * $scale-factor;
+$card-width: 4.840vw * $scale-factor;
+$card-height: 6.443vw * $scale-factor;
 
 body {
+  background: #fefefe;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -28,7 +29,7 @@ body {
   font-family: 'Apple Symbols';
   font-size: 8vw * $scale-factor;
   text-align: center;
-  transition: opacity 100ms ease-in;
+  transition: opacity 150ms ease-in;
   width: $card-width;
   line-height: 8.123vw * $scale-factor;
   padding-top: .0025em;
@@ -40,7 +41,7 @@ body {
     color: #f00;
   }
   &.flash-appear, &.flash-enter {
-    opacity: 0.2;
+    opacity: 0.5;
     transform: scale(1.03, 1.03);
     &.flash-appear-active,
     &.flash-enter-active {
@@ -58,25 +59,28 @@ body {
 
 // card containers
 .stock, .waste, .tableau, .foundation {
+  border-radius: 0.16vw * $scale-factor;
+  box-shadow: inset 0 0 30px #eee;
   min-height: $card-height;
   min-width: $card-width;
   margin: 0 0.436vw * $scale-factor 0.9vw * $scale-factor;
   background: #eee;
-  transition: background 150ms ease-out;
 
   &.highlighted {
-    background: #dadada;
+    background: #ddd;
+    box-shadow: inset 0 0 4px #666;
     .card-container:last-child {
       transform: scale(1.1, 1.1);
       box-shadow: 7px 0px 33px -8px #ccc;
     }
   }
 }
+
 .stock {
   cursor: pointer;
 }
 .card-container {
-  border-radius: 0.16vw * $scale-factor;
+  border-radius: 0.19vw * $scale-factor;
   height: $card-height;
   width: $card-width;
   overflow: hidden;
@@ -85,7 +89,7 @@ body {
 
   @for $i from 1 through 7 {
     &:nth-child(#{$i}) {
-      transition: margin-top ($i * 150ms) ease-in-out, transform 80ms ease-out;
+      transition: margin-top ($i * 150ms) ease-in-out, transform 50ms ease-out;
     }
   }
 
@@ -129,6 +133,7 @@ body {
 .foundations {
   height: $card-height;
   .foundation {
+    transition: all 200ms ease-out;
     position: relative;
     .card-container {
       position: absolute;
