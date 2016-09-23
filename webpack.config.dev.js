@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-var precss       = require('precss');
-var autoprefixer = require('autoprefixer');
+const precss       = require('precss');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'inline-source-map',
